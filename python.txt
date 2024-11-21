@@ -1,0 +1,21 @@
+> 입력 : input()
+변수명 = input("화면에 출력할 문구")
+
+
+> 객체
+1) 가변 : list, dictionary, set
+2) 불변 : tuple, 숫자, 문자열  -> 변경시 신규 객체가 생성되는 것임
+
+
+> 자료형
+list  ㅡ 순서O, 중복O, 수정O
+tuple ㅡ 순서O, 중복O, 수정X
+set   ㅡ 순서X, 중복X, 수정O
+dictionary
+1) 리스트 (1차원) []
+2) 리스트 (2차원) [[]]  / [행][열]
+생성
+list [] : list()
+tuple()
+set()
+
