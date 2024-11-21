@@ -128,3 +128,70 @@ korea_song = """
 # print(f"2) 문자열 실습입니다. {{ 중괄호 }}를 출력해보세요")
 
 
+
+#  문자열 인덱싱 / 슬라이싱
+# a = "Hello, Python"
+# print(a[7]+a[8]+a[9]+a[10]+a[11]+a[12])   # --> Python
+# print(a[7:])                              # --> Python
+# print(a[-6:])                             # --> Python
+# print(a[7:12])                             # --> Pytho
+# print(a[7:13])                             # --> Python
+
+
+# date = "20240930"
+# print("년 : ", date[:4])     # -->년 :  2024
+# print("월 : ", date[4:6])    # -->월 :  09
+# print("일 : ", date[6:])     # -->일 :  30
+# print(date[:4]+"년 "+date[4:6]+"월 "+date[6:]+"일")    # --> 2024년 09월 30일
+
+# 길이구하기 : len()함수
+# print(len(a))                  # --> 13
+# print(len(date))               # --> 8
+
+# 개수 세기 : .count(찾을문자) 메서드
+# print(a.count('l'))            # --> 2
+
+# 위치 찾기
+#  : .find(찾을문자) 메서드 ~> 있는지 여부  (없을때 -1 반환)
+#  : .index(찾을문자) 메서드 ~> index값을 반환 (없을때 오류)
+# a = "Hello, Python"
+# print(a.find('P'))               # --> 7
+# print(a.find('o'))               # --> 4
+# print(a.index('o'))              # --> 4
+# print(a.find('s'))               # --> -1
+# print(a.index('s'))            # --> 오류
+
+# first_o = a.find('o')
+# print(first_o)                   # --> 4
+# second_o = a.find('o', first_o + 1)
+# print(second_o)                  # --> 11
+
+
+# 문자열
+# 바꾸기 : .replace("기존문자", "바꿀문자")
+# 나누기 : .split("나누는문자")
+# a = "Hello, Python"
+# print(a.replace("Python", "파이썬"))   # --> Hello, 파이썬
+# print(a.split("l"))                   # --> ['He', '', 'o, Python']
+# print(a.split(" "))                   # --> ['Hello,', 'Python']
+
+
+# 대소문자 변환
+# a = "Hello, World"
+# print(a.upper())                        # --> HELLO, WORLD
+# print(a.lower())                        # --> hello, world
+
+# 공백 삭제
+# a = "     H e  l l     o   "
+# print(f"[{a.rstrip()}]")                # --> [     H e  l l     o]
+# print(f"[{a.lstrip()}]")                # --> [H e  l l     o   ]
+# print(f"[{a.strip()}]")                 # --> [H e  l l     o]
+# print(f"[{a.replace(" ", "")}]")        # --> [Hello]
+
+# 숫자판별
+# print("1234".isdecimal())                 # --> True
+# print("1234".isdigit())                   # --> True
+# print("1234".isnumeric())                 # --> True
+# print("-1234".isnumeric())                # --> False
+print("12.34".isnumeric())                # --> False
+
