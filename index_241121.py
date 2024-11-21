@@ -189,9 +189,23 @@ korea_song = """
 # print(f"[{a.replace(" ", "")}]")        # --> [Hello]
 
 # 숫자판별
-# print("1234".isdecimal())                 # --> True
-# print("1234".isdigit())                   # --> True
-# print("1234".isnumeric())                 # --> True
-# print("-1234".isnumeric())                # --> False
-print("12.34".isnumeric())                # --> False
+# print("1234".isdecimal())               # --> True
+# print("1234".isdigit())                 # --> True
+# print("1234".isnumeric())               # --> True
+# print("-1234".isnumeric())              # --> False  *** 음수는 항상 False
+# print("12.34".isnumeric())              # --> False  *** 소수점 포함한 실수는 False
 
+# print("Hello".islower())                # --> False
+# print("HELLO".isupper())                # --> True
+
+
+# 실습. 종합실습
+# 1번)
+# name = input("이름을 입력하세요. ")
+# age = int(input("나이를 입력하세요. "))
+# print(f"안녕하세요! {name}님 ({age}세)\n")
+# 2번)
+# name = input("이름을 입력하세요. ")
+# year_birth = int(input("태어난 년도를 입력하세요. "))
+# year_current = int(input("올해 년도를 입력하세요. "))
+# print(f"올해는 {year_current}년, {name}님의 나이는 {year_current - year_birth}세 입니다.")
