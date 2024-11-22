@@ -50,25 +50,49 @@
 # # ㄴ--> 1 3 5 7 9 
 
 # 실습. while문 사용하기
-while True :
-    a = input("양수를 입력하세요  ('종료' 입력 시 프로그램 종료): ")
+# while True :
+#     a = input("양수를 입력하세요  ('종료' 입력 시 프로그램 종료): ")
     
-    if str(a).isdecimal() :
-        a=int(a)
-        if a==0:
-            continue
-        else :
-            count = 1
-            total = 0
-            while count <= a :
-                total += count
-                count += 1
-            print(f"1부터 {a}까지의 합은 {total}입니다.")
-    elif a=="종료":
-        print("프로그램을 종료합니다.")
-        break
-    else :
-        print("양수만 입력 하세요")
+#     if str(a).isdecimal() :
+#         a=int(a)
+#         if a==0:
+#             continue
+#         else :
+#             count = 1
+#             total = 0
+#             while count <= a :
+#                 total += count
+#                 count += 1
+#             print(f"1부터 {a}까지의 합은 {total}입니다.")
+#     elif a=="종료":
+#         print("프로그램을 종료합니다.")
+#         break
+#     else :
+#         print("양수만 입력 하세요")
+
+# ㄴ> 리더님 코드
+# while True :
+#     user_input = input("양수를 입력하세요.('종료'입력시 프로그램 종료): ")
+#     if user_input =="종료":
+#         print("프로그램을 종료합니다.")
+#         break
+#     if not user_input.isdigit():     # .isdigit()에서 음수도 False로 판별해 줌
+#         print("양수를 입력하세요")
+#         continue
+#     number = int(user_input)
+#     if number == 0 :
+#         continue
+    
+#     total = 0
+#     num = 1
+#     while num <= number:
+#         total += num
+#         num += 1
+#     print(f"1부터 {number}까지의 합은 {total}입니다.")
+
+
+
+    
 
 
 
@@ -76,5 +100,3 @@ while True :
 
 
 
-
-#======= for 문 =======
