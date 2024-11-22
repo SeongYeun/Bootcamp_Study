@@ -126,13 +126,29 @@
 
 
 
-# 조건문 + in 연산자
-fruit = input("과일을 한글로 입력하세요 : ")
-if fruit in ["사과", "바나나", "복숭아"] :
-    print(f"{fruit}은(는) 과일에 포함되어 있습니다.")
-else :
-    print("존재하지 않는 과일입니다.")
+# # 조건문 + in 연산자
+# fruit = input("과일을 한글로 입력하세요 : ")
+# if fruit in ["사과", "바나나", "복숭아"] :
+#     print(f"{fruit}은(는) 과일에 포함되어 있습니다.")
+# else :
+#     print("존재하지 않는 과일입니다.")
 
 
 
 # 실습. in 연산자 활용
+# fruit={}
+# fruit['apple']=95
+# fruit['banana']=105
+# fruit['cherry']=50
+# print(fruit)
+# a = input("과일을 영문으로 입력하세요. : ")
+# if a in fruit :
+#     kcalorie=fruit.get(a)
+#     print(f"{a}의 칼로리는 {kcalorie}Kcal입니다.")
+# else :
+#     f_list = list(fruit.keys())
+#     print(f"{f_list}중에 하나를 입력하세요")
+
+
+
+

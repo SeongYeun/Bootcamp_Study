@@ -34,10 +34,20 @@ tuple ㅡ 순서O, 중복O, 수정X
 dictionary ㅡ (key:value)
 set   ㅡ 순서X, 중복X, 수정O  ~ 집합 개념
 
+> 자료형 변환
+str()
+int()
+float()
+list()
+set()
+
+
+
 
 1) 리스트 (1차원) []
 2) 리스트 (2차원) [[]]  / [행][열]
-          생성  /  삭제  /  값 추가  /  값 수정  / 값 정렬
+          생성  /  삭제  /  값 추가  /  값 추출  /  값 수정  / 값 정렬  /  형 변환
+문자열  : "문자열"
 list [] : list()   
 dict {} : dict()   del
 tuple() : tuple()  
