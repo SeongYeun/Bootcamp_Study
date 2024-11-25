@@ -1,8 +1,19 @@
+##### ==================  출력 옵션 설정
+pd.options.display.float_format = '{:.4f}'.format
+pd.set_option('display.float_format', lambda x: f'{x:.2f}') 
+pd.set_option("display.max_columns", None)
+pd.set_option("display.max_rows", None)
+
+
 ##### ==================  레이블 인코딩
 from sklearn.preprocessing import LabelEncoder
 cols = X_tr.select_dtypes(include='O').columns
 
 
+##### ==================  원핫 인코딩
+dummies = df.get_dummies(df['대상컬럼명'])                            # 대상 컬럼만 원핫 인코딩
+dummies = df.get_dummies(df, columns=['대상컬럼1', '대상컬럼2'])       # 대상 컬럼만 원핫 인코딩
+dummies = df.get_dummies(df)                                         # df 저체를 대상으로 원핫 인코딩
 
 
 
@@ -64,6 +75,36 @@ print("===========================\n")
 print(model.summary())
 print("===========================\n")
 print(round(-0.2007, 3))   # -0.201
+
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression(rnadom_state=0)
+lr.fit(X_tr, y_tr)
+pred = lr.predict(X_val)
+print(roc_auc_score(y_val, pred[:,1]))
+
+
+##### ==================  의사결정나무 DT
+from sklearn.tree import DecisionTreeClassifier
+dt = DecisionTreeClassifier(random_state=0)
+dt.fit(X_tr, y_tr)
+pred = dt.predict(X_val)
+print(roc_auc_score(y_val, pred[:,1]))
+
+
+##### ==================  Xgboost 모델
+import xgboost as xgb
+xg = xgb.XGBClassifier(random_state=0)
+xg.fit(X_tr, y_tr)
+pred = xg.predict(X_val)
+print(roc_auc_score(y_val, pred[:,1]))
+
+##### ==================  LightGBM 모델
+import lightgbm as lgb
+lg = lgb.LGBMClassifier(random_state=0, verbose=-1)
+lg.fit(X_tr, y_tr)
+pred = lg.predict(X_val)
+print(roc_auc_score(y_val, pred[:,1]))
+
 
 
 

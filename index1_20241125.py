@@ -134,79 +134,124 @@
 #             print(elem, end=" ")            # --> 6 3 12 18 
 
 # 실습. 이중for문 구구단 만들기
-# for i in range(1, 10):
+# for i in range(2, 10):
 #     print(f"[ {i} 단 ]")
 #     for j in range(1, 10):
 #         print(f"{i} x {j} = {i*j}")
 #     print()
 
 # 과제. 자판기 프로그램
-vending_machine = ['게토레이', '게토레이', '레쓰비', '레쓰비', '생수', '생수', '생수', '이프로']
+# vending_machine = ['게토레이', '게토레이', '레쓰비', '레쓰비', '생수', '생수', '생수', '이프로']
 
-while True : 
-    print("사용자 종류를 입력하세요: ")
-    print("1. 소비자")
-    print("2. 주인")
-    a = input(" ")
-    # 예외처리
-    if a.isdecimal():
-        if int(a)==1 :
-            a = "소비자"
-        elif int(a)==2 :
-            a = "주인"
-        else :
-            print("잘 못 입력하셨습니다.")
-    elif a == "종료":
-        break
-    elif a!="소비자" and a!="주인":
-        print("잘 못 입력하셨습니다.")
-    # 소비자인 경우
-    if a == "소비자":
-        b = input('마시고 싶은 음료? ')
-        if vending_machine.count(b)==0:
-            print(f"{b}는 지금 없네요")
-        else :
-            print(f"{b} 드릴게요")
-            vending_machine.pop(vending_machine.index(b))
-            print("남은 음료수: ",vending_machine)
-    # 주인인 경우
-    elif a == "주인":
-        while True :
-            print("할 일 선택")
-            print("1. 추가")
-            print("2. 삭제")
-            c = input(" ")
-            # 예외처리
-            if c.isdecimal():
-                if int(c)==1 :
-                    c = "추가"
-                elif int(c)==2 :
-                    c = "삭제"
-                else :
-                    print("잘 못 입력하셨습니다.")
-            elif c!="추가" and c!="삭제":
-                print("잘 못 입력하셨습니다.")
-            print("남은 음료수: ",vending_machine)
-            print()
-            # 추가인 경우
-            if c=="추가" :
-                add = input("추가할 음료수? ")
-                vending_machine.append(add)
-                vending_machine.sort()
-                print("추가 완료")
-                print("남은 음료수: ",vending_machine)
-                break
-            # 삭제인 경우
-            elif c=="삭제" :
-                while True :
-                    d = input("삭제할 음료수? ")
-                    if vending_machine.count(d)==0:
-                        print(f"{d} 은/는 지금 없네요." )
-                        break
-                    else :
-                        vending_machine.remove(d)
-                        print("삭제 완료")
-                        print("남은 음료수: ",vending_machine)
-                        break
-            break
-    print("=====================================")
+# while True : 
+#     print("사용자 종류를 입력하세요: ")
+#     print("1. 소비자")
+#     print("2. 주인")
+#     print("3. 종료")
+#     a = input(" ")
+#     # 예외처리
+#     if a.isdecimal():
+#         if int(a)==1 :
+#             a = "소비자"
+#         elif int(a)==2 :
+#             a = "주인"
+#         elif int(a)==3 :
+#             a = "종료"
+#         else :
+#             print("잘 못 입력하셨습니다.")
+#     elif a == "종료":
+#         break
+#     elif a!="소비자" and a!="주인":
+#         print("잘 못 입력하셨습니다.")
+#     # 소비자인 경우
+#     if a == "소비자":
+#         b = input('마시고 싶은 음료? ')
+#         if vending_machine.count(b)==0:
+#             print(f"{b}는 지금 없네요")
+#         else :
+#             print(f"{b} 드릴게요")
+#             vending_machine.pop(vending_machine.index(b))
+#             print("남은 음료수: ",vending_machine)
+#     # 주인인 경우
+#     elif a == "주인":
+#         while True :
+#             print("할 일 선택")
+#             print("1. 추가")
+#             print("2. 삭제")
+#             c = input(" ")
+#             # 예외처리
+#             if c.isdecimal():
+#                 if int(c)==1 :
+#                     c = "추가"
+#                 elif int(c)==2 :
+#                     c = "삭제"
+#                 else :
+#                     print("잘 못 입력하셨습니다.")
+#             elif c!="추가" and c!="삭제":
+#                 print("잘 못 입력하셨습니다.")
+#             print("남은 음료수: ",vending_machine)
+#             print()
+#             # 추가인 경우
+#             if c=="추가" :
+#                 add = input("추가할 음료수? ")
+#                 vending_machine.append(add)
+#                 vending_machine.sort()
+#                 print("추가 완료")
+#                 print("남은 음료수: ",vending_machine)
+#                 break
+#             # 삭제인 경우
+#             elif c=="삭제" :
+#                 while True :
+#                     d = input("삭제할 음료수? ")
+#                     if vending_machine.count(d)==0:
+#                         print(f"{d} 은/는 지금 없네요." )
+#                         break
+#                     else :
+#                         vending_machine.remove(d)
+#                         print("삭제 완료")
+#                         print("남은 음료수: ",vending_machine)
+#                         break
+#             break
+#     print("=====================================")
+
+
+# 과제. 리더님 코드
+# vm = ["게토레이", "게토레이", "레쓰비", "레쓰비", "생수", "생수", "생수", "이프로"]
+
+# while True:
+#     user_input=input("사용자를 선택하세요. (1. 소비자, 2. 주인, 3. 종료): ")
+#     # 1. 소비자
+#     if user_input == ("1" or "소비자") :
+#         drink = input("마시고 싶은 음료는? ")
+#         if drink in vm: # 있으면 제거
+#             vm.remove(drink)
+#             print(f"{drink} 드릴게요")
+#         else:
+#             print("음료수가 없습니다.")
+#         print("남은 음료수: ", vm)
+#     # 2. 주인
+#     elif user_input == ("2" or "주인") :
+#         move = input("할 일을 선택하세요 (1. 추가, 2. 삭제) : ")
+#         if move == ("1" or "추가"):
+#             drink = input("추가할 음료수는? ")
+#             vm.append(drink)
+#             vm.sort()
+#             print("추가 완료")
+#         elif move == ("2" or "삭제"):
+#             drink = input("삭제할 음료수는? ")
+#             if drink in vm :
+#                 vm.remove(drink)
+#                 print("삭제 완료")
+#             else :
+#                 print(f"{drink}는 현재 없습니다.")        
+#         else:
+#             print("값을 잘못 입력하셨습니다..")
+#         print("남은 음료수: ", vm)
+#     # 3. 종료
+#     elif user_input == ("3" or "종료") :
+#         print("자판기 프로그램을 종료합니다.")
+#         break
+#     # 입력값 오류
+#     else:
+#         print("값을 잘못 입력하셨습니다..")
+        
