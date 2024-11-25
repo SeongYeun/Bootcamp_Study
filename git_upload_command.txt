@@ -2,7 +2,7 @@
 
 > main에 .gitignore.txt 생성 > 저장
 
-> main에 1차 업로드 (main에 파일이 하나라도 있어야 branch 생성이 가능함)
+> main에 1차 업로드 (main에 파일이 하나라도 업로드 되어있어야 branch 생성이 가능함)
     git add .ignore.txt
     git commit -m ""
     git push origin
