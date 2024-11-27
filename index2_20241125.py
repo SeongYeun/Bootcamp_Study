@@ -42,6 +42,21 @@
 #     }
 # print(students())                       # --> {'name': '홍길동', 'age': 20, 'major': '컴퓨터공학'}
 
+
+# # 여러 개의 리턴값이 있는 함수정의
+# def get_return():
+#     arr = ["사과", "바나나"]
+#     dic = {
+#         "name" : "홍길동",
+#         "age" : 20
+#     }
+#     num = 30
+#     return arr, dic, num
+# arrs, dicts, nums = get_return()
+# print(arrs)         # --> ['사과', '바나나']
+# print(dicts)        # --> {'name': '홍길동', 'age': 20}
+# print(nums)         # --> 30
+
 # 실습1
 # def sum_product (num1, num2):
 #     if num1 == num2 :
