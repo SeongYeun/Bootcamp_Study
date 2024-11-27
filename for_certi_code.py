@@ -75,6 +75,10 @@ df.idxmax()                                         # 가장 큰 값의 인덱�
 행 집계값 ㅡ df.T + .mean() / .sum() / .std()
 sum(기본값 : axis=0 (방향:↓))
 
+##### ==================  표준편차
+표본 표준편차(ddof=1)   : pandas >> df.std()
+# 모 표준편차  (ddof=0)   : numpy  >> np.std(df)
+
 
 ##### ==================  정렬
 df.sort_values('컬럼명', ascending=T/F, inplace=T/F)
@@ -143,6 +147,8 @@ dummies = df.get_dummies(df)                                         # df 저체
 ##### ==================  검증데이터 분할
 from sklearn.preprocessing import train_test_split
 X_tr, X_val, y_tr, y_val = train_test_split(train, target, test_size = 0.2, random_state=0)
+
+
 ##### ==================  랜덤포레스트
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score
@@ -170,10 +176,6 @@ pred.to_csv("result.csv", index=False)
 check = pd.read_csv("result.csv")
 print(check)
 
-
-##### ==================  표준편차
-표본 표준편차(ddof=1)   : pandas >> df.std()
-# 모 표준편차  (ddof=0)   : numpy  >> np.std(df)
 
 
 
@@ -253,12 +255,19 @@ print(round(chi2_stats, 3))  # 260.717
 # 4 : 이상 없음 : 70% = 0.7
 # 상대빈도(비율)을 리스트로 생성 (레이블 순서대로)
 prob = [0.1, 0.05, 0.15, 0.7]
+# 항암약 기대빈도 = 감기약 관찰빈도(비율) * 항암표본수(20)
+expected_counts = [(0.1*20), (0.05*20), (0.15*20), (0.7*20)]            # 방법_1
+expected_counts = [ x*len(df) for x in prob]                            # 방법_2
 
+
+# 항암약(위약)의 관찰빈도표 산출
+observed_counts = df['항암약'].value_counts().sort_index().to_list()
 # 항암약(위약)의 상대빈도표 산출
 print(df['항암약'].value_counts(normalize=True))            # 관찰빈도(.value_counts)를 비율(normalize=True)로 환산
 
-from scipy.stats import chisqure
-
+# 카이제곱 검정
+from scipy.stats import chisquare
+chi2chisquare(f_obs=observed_counts, f_exp = expected_counts)
 
 
 
@@ -279,3 +288,5 @@ print(round(odds_ratio,3))    # 0.702
 
 
 
+
+##### ==================  다중 선형 회귀
