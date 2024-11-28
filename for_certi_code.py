@@ -1,9 +1,11 @@
-#####   전처리
+#####   표준화(스케일링)
 from sklearn.preprocessing import MinMaxScaler      # 
 from sklearn.preprocessing import RobustScaler      # 
 from sklearn.preprocessing import StandardScaler    # 
+#####   인코딩 / 검증데이터 분할
 from sklearn.preprocessing import LabelEncoder      # train['컬럼명']=le.fit_transform(train['컬럼명'])  /  test['컬럼명']=le.transform(test['컬럼명'])
 from sklearn.model_selection import train_test_split  # (train, target, test_size=0.2, random_state=0)
+from sklearn.model_selection import cross_val_  # (train, target, test_size=0.2, random_state=0)
 #####   범주형분석
 from sklearn.ensemble import RandomForestClassifier # (random_state=0, max_depth=3~10, n_estimators=100~500)
 from sklearn.tree import DecisionTreeClassifier
@@ -15,6 +17,7 @@ from sklearn.metrics import roc_auc_score           # roc_auc_score(y_val, pred)
 from sklearn.metrics import f1_score                # f1_score(y_val, pred, average='macro')
 from scipy.stats import chi2_contingency
 #####   연속형분석
+from statsmodels.formula.api import ols             # model = ols(formula, data=df).fit()   /   summary = model.summary()
 from sklearn.ensemble import RandomForestRegressor  # (random_state=0, max_depth=3~10, n_estimators=100~500)
 from sklearn.linear_model import LinearRegression
 import xgboost as xgb       # XGBRegressor (random_state=0)
@@ -48,7 +51,8 @@ pd.set_option("display.max_rows", None)
 
 
 ##### ==================  EDA
-df.describe(include="O")
+df.describe(include="O")                                # object 변수에 대한 통계량 출력
+df = df.dropna()                                        # 결측치가 있는 행 모두 제거
 
 
 ##### ==================  테이블 병합 / Join
@@ -78,6 +82,11 @@ sum(기본값 : axis=0 (방향:↓))
 ##### ==================  표준편차
 표본 표준편차(ddof=1)   : pandas >> df.std()
 # 모 표준편차  (ddof=0)   : numpy  >> np.std(df)
+
+##### ==================  상관관계
+df_corr = df.corr()['컬럼명'].abs()                     # 상관계수의 절대값
+
+
 
 
 ##### ==================  정렬
@@ -114,16 +123,23 @@ for index, row in stem_leaf.iterrows():
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
 cols = ['Customer_care_calls', 'Customer_rating', 'Cost_of_the_Product']
-X_tr[cols] = scaler.fit_transform(X_tr[cols])
-X_test[cols] = scaler.transform(X_test[cols])
+X_tr[cols] = scaler.fit_transform(X_tr[[cols]])
+X_test[cols] = scaler.transform(X_test[[cols]])
+
+##### ==================  스케일링 ㅡ Standard
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+cols = ['Customer_care_calls', 'Customer_rating', 'Cost_of_the_Product']
+X_tr[cols] = scaler.fit_transform(X_tr[[cols]])
+X_test[cols] = scaler.transform(X_test[[cols]])
 
 
 ##### ==================  스케일링 ㅡ Robust
 from sklearn.preprocessing import RobustScaler
 scaler = RobustScaler()
 cols = ['Customer_care_calls', 'Customer_rating', 'Cost_of_the_Product']
-X_tr[cols] = scaler.fit_transform(X_tr[cols])
-X_test[cols] = scaler.transform(X_test[cols])
+X_tr[cols] = scaler.fit_transform(X_tr[[cols]])
+X_test[cols] = scaler.transform(X_test[[cols]])
 
 
 ##### ==================  레이블 인코딩
@@ -290,3 +306,21 @@ print(round(odds_ratio,3))    # 0.702
 
 
 ##### ==================  다중 선형 회귀
+from statsmodels.fomulas.api import ols
+formula = 'temperature ~ solar + wind + o3'
+model = ols(formula, data=df).fit()
+summary = model.summary()
+# 특정 독립변수의 회귀계수 추출
+print( model.params['o3'] )
+# 특정 독립변수의 선형성 p-value
+print( model.pvalues['wind'] )
+
+# 신규 데이터 생성
+new_data = pd.DataFrame({
+    'solar' : [100],
+    'wind' : [5],
+    'o3' : [30]
+})
+# 신규 데이터 예측값 산출
+pred = model.predict(new_data)
+

@@ -295,11 +295,9 @@
 
 # 실습3. 건강상태 클래스 만들기
 class HealthStatus:
-    hp = 100
-
-    def __init__(self, name):
-        self._name = name
-        self._hp = hp
+    def __init__(self):
+        self.total_workout_hour = 0
+        self.total_drink_glass= 0
     # 이름
     def set_name(self, name):
         self._name = name
@@ -310,38 +308,123 @@ class HealthStatus:
         self._hp = hp
     def get_hp(self):
         return self._hp
-
     # 운동
     def workout(self, hour):
         self.hour = hour
-        self.total_hour += hour
+        self.total_workout_hour += hour
         print(f"{self.hour}시간 운동하다")
         if self._hp==100:
             return self._hp
-        self._hp += 1
-
+        self._hp += self.hour
     # 술
     def drink(self, glass):
         self.glass = glass
-        self.total_glass += glass
+        self.total_drink_glass += glass
         print(f"술을 {self.glass}잔 마시다")
         if self._hp==0:
             return self.hp
-        self._hp -= 1
-
+        self._hp -= self.glass
     # 건강상태 출력
     def show_status(self):
-        print(f"총 {self.total_hour}시간 운동하다")
-        print(f"술을 총 {self.total_glass}잔 마시다")
+        print("===============================")
+        print(f"총 {self.total_workout_hour}시간 운동하다")
+        print(f"술을 총 {self.total_drink_glass}잔 마시다")
         print(f"{self._name}의 현재 hp : {self._hp}")
         print("===============================")
     
 
-p1 = HealthStatus()
-p2 = HealthStatus()
-p1.setname("나몸짱")
-p1.workout(2)
-p1.workout(3)
-p1.drink(2)
-p1.show_status()
-p2.setname("나약해")
+p_1 = HealthStatus()
+p_1.set_name("나몸짱")
+p_1.set_hp(92)
+p_1.workout(2)
+p_1.workout(3)
+p_1.drink(2)
+p_1.show_status()
+
+p_2 = HealthStatus()
+p_2.set_name("나약해")
+p_2.set_hp(35)
+p_2.workout(1)
+p_2.drink(2)
+p_2.drink(2)
+p_2.show_status()
+
+# 실습3. 건강상태 클래스 만들기 ㅡ 리더님 코드
+class Health:
+    def __init__(self, name):
+        self._hp = 100
+        self._name = name
+
+    def set_name(self, value_name):
+        self._name = value_name
+    def get_name(self):
+        return self._name
+    
+    def set_hp(self, value_hp):
+        if value_hp >= 100:
+            self._hp = 100
+        elif value_hp <= 0:
+            self._hp = 0
+        self._hp = value_hp
+    def get_hp(self):
+        return self._hp
+    
+    def exercise(self, hour):
+        self.set_hp(self._hp + hour)            # 메서드 함수내에 다른 메서드 함수(setter)를 호출하고, 인수를 수식으로 넘겨줌
+        print(f"{hour}시간 운동하다")
+    def drink(self, cups):
+        self.set_hp(self._hp - cups)            # 메서드 함수내에 다른 메서드 함수(setter)를 호출하고, 인수를 수식으로 넘겨줌
+        print(f"술을 {cups}잔 마셨다")
+    
+    def info(self):
+        print(f"{self.get_name()} - hp : {self.get_hp()}")       # 메서드 함수내에 다른 메서드 함수(getter)를 호출
+        print("=========================")
+
+p1=Health("나몸짱")
+p1.set_hp(80)
+p1.info()           # 나몸짱 - hp : 80
+p1.exercise(5)      # 5시간 운동하다
+p1.drink(2)         # 술을 2잔 마셨다
+p1.info()           # 나몸짱 - hp : 83
+
+p2=Health("나약해")
+p2.set_hp(20)
+p2.info()           # 나약해 - hp : 20
+p2.exercise(1)      # 1시간 운동하다
+p2.drink(10)        # 술을 10잔 마셨다
+p2.info()           # 나약해 - hp : 11
+
+
+# 데코레이터 (getter, setter)
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+    
+    # getter
+    @property                   # getter의 데코레이터
+    def name(self):
+        return self.__name
+    
+    # setter
+    @name.setter                # setter의 데코레이터
+    def name(self, value):
+        self.__name = value
+    
+    # getter
+    @property                   # getter의 데코레이터
+    def age(self):
+        return self.__age
+
+    # setter
+    @age.setter                 # setter의 데코레이터
+    def age(self, value):
+        self.__age = value
+    
+p1 = Person("홍길동", 20)
+print(p1.name)          # --> 홍길동
+print(p1.age)           # --> 20
+p1.name = "이몽룡"
+p1.age = 25
+print(p1.name)          # --> 이몽룡
+print(p1.age)           # --> 25
