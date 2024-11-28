@@ -165,18 +165,6 @@ from sklearn.preprocessing import train_test_split
 X_tr, X_val, y_tr, y_val = train_test_split(train, target, test_size = 0.2, random_state=0)
 
 
-##### ==================  랜덤포레스트
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score
-depth = [3, 5, 7, 9, 10]
-n_est = [100, 200, 300, 400, 500]
-for i in depth :
-	for j in n_est :
-		rf_0 = RandomForestClassifier(random_state=0, max_depth=i, n_estimators=j)
-		rf_0.fit(X_tr, y_tr)
-		pred_0 = rf_0.predict(X_val)
-		roc_auc_0 = roc_auc_score(y_val, pred_0)
-		print("rf(depth : ",i, ", n_esti : ",j,")의 ROC_AUC : ", roc_auc_0) 
 
 
 ##### ==================  test 예측 및 csv 파일 제출
@@ -195,9 +183,20 @@ print(check)
 
 
 
+##### ==================  랜덤포레스트
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import roc_auc_score
+depth = [3, 5, 7, 9, 10]
+n_est = [100, 200, 300, 400, 500]
+for i in depth :
+	for j in n_est :
+		rf_0 = RandomForestClassifier(random_state=0, max_depth=i, n_estimators=j)
+		rf_0.fit(X_tr, y_tr)
+		pred_0 = rf_0.predict(X_val)
+		roc_auc_0 = roc_auc_score(y_val, pred_0)
+		print("rf(depth : ",i, ", n_esti : ",j,")의 ROC_AUC : ", roc_auc_0) 
 
-
-##### ==================  로지스틱회귀 _1
+##### ==================  다중 로지스틱회귀 _1
 from statsmodels.formula.api import logit
 X = df[['Gender', 'SibSp', 'Parch', 'Fare']].copy()
 Y = ['Survived']
@@ -206,6 +205,7 @@ print("===========================\n")
 print(model.summary())
 print("===========================\n")
 print(round(-0.2007, 3))   # -0.201
+
 
 ##### ==================  로지스틱회귀 _2
 from sklearn.linear_model import LogisticRegression
@@ -288,7 +288,9 @@ chi2chisquare(f_obs=observed_counts, f_exp = expected_counts)
 
 
 
-##### ==================  Survived / SibSp 오즈비
+##### ==================  Survived / SibSp 오즈비 <<< 오즈비 구하려면 statsmodels.formula.api 를 이용해야 parameter를 구할 수 있음
+from statsmodels.formula.api import logit
+from statsmodels.formula.api import ols
 import numpy as np
 odds_ratio = np.exp(model.params["SibSp"])
 print("===========================\n")
@@ -305,7 +307,38 @@ print(round(odds_ratio,3))    # 0.702
 
 
 
-##### ==================  다중 선형 회귀
+##### ==================  선형 회귀 ㅡ p-value 확인하려면 statsmodels를 이용해야 함
+import statsmodels.api as sm                    # 인코딩(자동X), 상수항추가(자동X), 변수명 별도 기입X
+# train에 상수항 추가
+X_tr_const = sm.add_constant(X_tr)
+# OLS 모델 생성 및 학습
+model = sm.OLS(y_tr, X_tr_const).fit()
+# 회귀계수 및 p-value 추출
+coef = model.params
+p_values = model.pvalues
+
+
+from statsmodels.formula.api import ols         # 인코딩(자동 원핫), 상수항추가(자동O), 변수명 별도 기입O
+model = ols(formula='')
+
+
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression()
+lr.fit(X_tr, y_tr)
+pred = lr.predict(X_val)
+rmse(y_val, pred)
+# 회귀계수 확인
+coef = pd.Series(lr.coef_, index = X_val.columns)
+print(coef)
+# CRIM     -0.100175 
+# ZN        0.053071 
+# INDUS     0.021506 
+# CHAS      2.684051 
+# NOX     -17.767548
+
+
+
+##### ==================  다중 선형 회귀 ㅡ p-value 확인하려면 statsmodels를 이용해야 함
 from statsmodels.fomulas.api import ols
 formula = 'temperature ~ solar + wind + o3'
 model = ols(formula, data=df).fit()

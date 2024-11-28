@@ -124,8 +124,8 @@ class Product:                      # 부모 클래스
         print(f"재고: {self.quantity}개")
 
 class Electronic(Product):
-    def __init__(self, name, price, quantity, warranty_period=12):
-        super().__init__(name, price, quantity)
+    def __init__(self, prod_name, prod_price, prod_quantity, warranty_period=12):
+        super().__init__(prod_name, prod_price, prod_quantity)
         self.warranty_period = warranty_period
 
     # 보증기간 연장 메서드
@@ -139,17 +139,17 @@ class Electronic(Product):
         print(f"보증 기간 : {self.warranty_period}개월")
 
 class Food(Product):
-    def __init__(self, name, price, quantity, expiration_date):
-        super().__init__(name, price, quantity)
+    def __init__(self, prod_name, prod_price, prod_quantity, expiration_date):
+        super().__init__(prod_name, prod_price, prod_quantity)
         self.expiration_date = expiration_date
     
     # 유통기한 유효 여부 확인 메서드
     def is_expired(self, current_date):
         self.current_date = current_date
         if self.current_date > self.expiration_date :
-            print(f"{self.name} 는 유통기한이 지났습니다.")
+            print(f"{self.name} 는 유통기한이 지났습니다.")             # pord_name으로 생성해도 변수명은 부모클래스에서 사용하던 변수명(name)으로 사용해야 오류가 발생하지 않음
         else :
-            print(f"{self.name} 는 유통기한이 지나지 않았습니다.")
+            print(f"{self.name} 는 유통기한이 지나지 않았습니다.")      # pord_name으로 생성해도 변수명은 부모클래스에서 사용하던 변수명(name)으로 사용해야 오류가 발생하지 않음
         
     # 상품 정보 출력 메서드 (오버라이딩)
     def display_info(self, current_date):
@@ -166,3 +166,85 @@ apple.is_expired("2024-11-05")
 apple.is_expired("2024-11-11")
 apple.display_info("2024-11-05")
 apple.display_info("2024-11-11")
+
+
+
+# 실습. 상속과 오버라이딩 ㅡ 리더님 코드
+class Product:                      # 부모 클래스
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+    # 재고 업데이트 메서드
+    def update_quantity(self, amount):
+        self.quantity += amount
+        print(f"{self.name} 재고가 {amount}만큼 {'증가' if amount > 0 else '감소'}했습니다. 현재 재고: {self.quantity}")
+
+    # 상품 정보 출력 메서드
+    def display_info(self):
+        print(f"상품명: {self.name}")
+        print(f"가격: {self.price}원")
+        print(f"재고: {self.quantity}개")
+
+# 자식 클래스
+class Electronic(Product):
+    def __init__(self, name, price, quantity, warranty_period=12):
+        super().__init__(name, price, quantity)
+        self.warranty_period = warranty_period
+
+    # 보증기간 연장
+    def extend_warranty(self, months):
+        self.warranty_period += months
+        print(f"보증기간이 {months}개월 연장. 현재 보증기간 : {self.warranty_period}개월")
+    
+    # 오버라이딩
+    def display_info(self):
+        super().display_info()
+        print(f"보증기간: {self.warranty_period}개월")
+
+class Food(Product):
+    def __init__(self, name, price, quantity, expiration_date):
+        super().__init__(name, price, quantity)
+        self.expiration_date = expiration_date
+    
+    # 유통기한 확인
+    def is_expired(self, current_date):
+        if current_date > self.expiration_date:
+            print(f"{self.name} 은/는 유통기한이 지났습니다.")
+        else:
+            print(f"{self.name} 은/는 유통기한이 지나지 않았습니다.")
+
+    # 오버라이딩
+    def display_info(self):
+        super().display_info()
+        print(f"유통기한 : {self.expiration_date}")
+
+
+tv = Electronic("삼성스마트TV", 1500000, 2, 24)
+tv.display_info()
+# 상품명: 삼성스마트TV
+# 가격: 1500000원
+# 재고: 2개
+# 보증기간: 24개월
+tv.extend_warranty(12)
+# 보증기간이 12개월 연장. 현재 보증기간 : 36개월
+tv.display_info()
+# 상품명: 삼성스마트TV
+# 가격: 1500000원
+# 재고: 2개
+# 보증기간: 36개월
+
+
+milk = Food("서울우유", 3000, 30, "2024-12-10")
+milk.display_info()
+# 상품명: 서울우유
+# 가격: 3000원
+# 재고: 30개
+# 유통기한 : 2024-12-10
+milk.is_expired("2024-11-28")
+# 서울우유 은/는 유통기한이 지나지 않았습니다.
+milk.is_expired("2024-12-28")
+# 서울우유 은/는 유통기한이 지났습니다.
+
+
