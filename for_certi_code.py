@@ -299,12 +299,41 @@ print(round(odds_ratio,3))    # 0.702
 
 
 
+##### ==================  1표본 검정  (mu vs mu0)
+from scipy import stats
 
-##### ==================  ttest_ind : 독립 2표본 검정
+# 1) 1표본 : mu vs mu0(기준)
+1-1) 정규성검정 ㅡ 샤피로 윌크검정 (H0: df ~ N)
+pw_stats, pw_p_val = stats.shapiro(df)
+1-2) 정규성x ㅡ 윌콕슨  mu > mu0(120)
+wilcox_t_stats, wilcox_p_val = stats.wilcoxon(df['weights'] - 120, alternative="greater")
+1-3) 정규성o ㅡ t검정 ㅡ mu > mu0(120)
+t_stats, p_val = stats.ttest_1samp(df['weights'], 120, alternative="greater")
+
+# 2) 대응표본 : mu후 vs mu전(기준)
+2-1) 정규성검정 ㅡ 샤피로 윌크검정 (H0: (df후-df전) ~ N)
+pw_stats, pw_p_val = stats.shapiro(df(df후-df전))
+1-2) 정규성x ㅡ 정규성 검정 ㅡ 윌콕슨  mu후 > mu전
+wilcox_t_stats, wilcox_p_val = stats.wilcoxon(df_후, df_전, alternative="greater")
+2-1) 정규성o ㅡ t검정 ㅡ 대응표본 : mu후 > mu전
+t_stats, p_val = stats.ttest_rel(df_후, df_전, alternative="greater")
+t_stats, p_val = stats.ttest_rel(df(df_후-df_전), alternative="greater")
 
 
+##### ==================  2표본 검정 
 
 
+# 1) 독립표본 : mu_1 vs mu_2
+1-1) 정규성검정 ㅡ 샤피로 검정 (H0: df ~ N)
+pw_stats_1, pw_p_val_1 = stats.shapiro(df1)
+pw_stats_2, pw_p_val_2 = stats.shapiro(df2)
+1-2) 정규성x ㅡ Mann_Whitney U검정
+stats, p_value = stats.mannwhitneyu(df1, df2, )
+1-3) 등분산성검정 ㅡ levene검정
+1-3) 정규성O, 등분산x ㅡ Welch t검정
+
+1-4) 모두 정규O, 모두 등분산O ㅡ t검정
+t_stat, t_pvlaue = stats.ttest_ind(df1, df2, alternative = "greater")
 
 
 ##### ==================  선형 회귀 ㅡ p-value 확인하려면 statsmodels를 이용해야 함
