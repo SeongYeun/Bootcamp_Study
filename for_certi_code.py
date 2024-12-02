@@ -25,6 +25,21 @@ import lightgbm as lgb      # LGBMRegressor (random_state=0)
 from sklearn.metrics import mean_squared_error      # RMSE = mean_squared_error(y_val, pred) ** 0.5
 from sklearn.metrics import r2_score                # f2 = r2_score(y_val, pred)
 
+ㅡㅡㅡ1유형ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+import pandas as pd
+		pd.read_csv("파일명.csv", index = [col], datetimes=[cols], object=[cols], encoding="utf-8")
+		pd.to_csv("파일명.csv", index=False)
+		pd.to_datetime(df['X'])
+		pd.set_options('display.max_columns', None)
+		pd.concat(df1, df2)
+		pd.merge(left=df1, right=df2, how="left", on='X')
+		pd.get_dummies(df, drop_first = True)
+		pd.crosstab(df_1, df_2)
+import numpy as np
+		np.exp(model.params['X'])
+		np.histogram(df['X'], bins=10)
+
+
 
 ##### ==================  help 사용
 1st : 해당 패키지 import
@@ -37,10 +52,10 @@ df = pd.read_csv("파일명.csv", index_col='컬럼명')      # 인덱스 컬럼
 df = pd.read_csv("파일명.csv", index=False)            # 인덱스 제거
 
 ##### ==================  날짜 설정/추출
-df['컬럼명'] = pd.to_datetime(df['컬럼명'])     # date타입으로 타입변경
-df['year'] = df['날짜컬럼명'].dt.year           # year 추출 후 별도 변수 생성
-df['month'] = df['날짜컬럼명'].dt.month         # month 추출 후 별도 변수 생성
-df['month'] = df['날짜컬럼명'].dt.total_seconds()/60         # 시간을 초단위로 환산 후 분으로 환산
+df['컬럼명'] = pd.to_datetime(df['컬럼명'])     			# date타입으로 타입변경
+df['year'] = df['날짜컬럼명'].dt.year           			# year 추출 후 별도 변수 생성
+df['month'] = df['날짜컬럼명'].dt.month         			# month 추출 후 별도 변수 생성
+df['month'] = df['날짜컬럼명'].dt.total_seconds()/60        # 시간을 초단위로 환산 후 분으로 환산
 
 
 ##### ==================  출력 옵션 설정
@@ -96,6 +111,29 @@ df=sorted(columns=['컬럼명'], data=df)
 
 ##### ==================  상위 / 하위 n개
 min_value = df['컬럼명'][:10].min()
+
+
+ㅡㅡㅡ2유형ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import RobustScaler
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score			# K-fold 교차검증
+		f1_score = cross_val_score(model, train, target, cv=3, scoring='f1_macro').mean()
+
+from sklearn.ensemble import RandomForestClassifier
+import lgbmboost as lgbm
+		lg = lgbm.LGBMClassifier()
+import xgboost as xgb
+		xg = xgb.XGBoostClassfier()
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import f1_score
+from sklearn.metrics import roc_auc_score		#(이진분류 실제값 vs 예측확률값) => roc_auc_score 산출
+		pred = model.predict_proba(X_val)
+		roc_auc = roc_auc_score(y_val, pred)
+from sklearn.metrics import accuracy_score
+
 
 
 ##### ==================  연속형변수 도수분포표 ~ 히스토그램
@@ -155,7 +193,7 @@ le.inverse_transform()                          # 레이블인코딩 취소 (원
 ##### ==================  원핫 인코딩
 dummies = df.get_dummies(df['대상컬럼명'])                            # 대상 컬럼만 원핫 인코딩
 dummies = df.get_dummies(df, columns=['대상컬럼1', '대상컬럼2'])       # 대상 컬럼만 원핫 인코딩
-dummies = df.get_dummies(df)                                         # df 저체를 대상으로 원핫 인코딩
+dummies = df.get_dummies(df, drop_first = True)                      # df 저체를 대상으로 원핫 인코딩
 
 
 
@@ -182,7 +220,6 @@ print(check)
 
 
 
-
 ##### ==================  랜덤포레스트
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score
@@ -195,25 +232,6 @@ for i in depth :
 		pred_0 = rf_0.predict(X_val)
 		roc_auc_0 = roc_auc_score(y_val, pred_0)
 		print("rf(depth : ",i, ", n_esti : ",j,")의 ROC_AUC : ", roc_auc_0) 
-
-##### ==================  다중 로지스틱회귀 _1
-from statsmodels.formula.api import logit
-X = df[['Gender', 'SibSp', 'Parch', 'Fare']].copy()
-Y = ['Survived']
-model = logit(formula="Survived ~ Gender + SibSp + Parch + Fare", data=df).fit()
-print("===========================\n")
-print(model.summary())
-print("===========================\n")
-print(round(-0.2007, 3))   # -0.201
-
-
-##### ==================  로지스틱회귀 _2
-from sklearn.linear_model import LogisticRegression
-lr = LogisticRegression(rnadom_state=0)
-lr.fit(X_tr, y_tr)
-pred = lr.predict(X_val)
-print(roc_auc_score(y_val, pred[:,1]))
-
 
 ##### ==================  의사결정나무 DT ㅡ DecisionTreeClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -238,6 +256,93 @@ lg = lgb.LGBMClassifier(random_state=0, verbose=-1)
 lg.fit(X_tr, y_tr)
 pred = lg.predict(X_val)
 print(roc_auc_score(y_val, pred[:,1]))
+
+
+ㅡㅡㅡ3유형ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+from scipy.stats import shapiro
+		stats, p_value = shapiro(df)
+		stats, p_value = shapiro(df[diff])
+from scipy.stats import ttest_1samp
+		t_stats, p_value = ttest_1samp(df, 기대값)
+from scipy.stats import levene
+		stats, p_value = levene(df_1, df_2)
+from scipy.stats import ttest_rel
+		t_stats, p_value = ttest_rel(df후, df전, alternative = "greater")
+from scipy.stats import ttest_ind
+		t_stats, p_value = ttest_ind(df_1, df_2, alternative = "greater")
+from scipy.stats import wilcoxon
+		w_stats, p_value = wilcoxon(df - 기대값)
+		w_stats, p_value = wilcoxon(df후, df전, alternative = "greater")
+		w_stats, p_value = wilcoxon(df_1, df_2, alternative = "greater")
+		
+from scipy.stats import chi2_contingency		# 독립성/동질성
+		crosstable = crosstab(df1, df2)
+		chi_stats, chi_p_value, ddof, exp_freq_array = chi2_contingencty(crosstab)   범주_1 x 범주_2 --> 독립성검정
+		chi_stats, chi_p_value, ddof, exp_freq_array = chi2_contingencty(crosstab)   모집단목록 x 범주_2 --> 적합성검정
+
+from scipy.stats import chisquare				# 적합성
+		chi_stats, chi_p_value = chisquare(ob_freq, exp_freq)
+
+
+
+import pandas as pd
+		corr_table = df.corr(method="pearson")
+from scipy.stats import pearsonr
+		stats, p_value = pearsonr(df1, df2)		# H0: 두 변수간 선형관계가 없다 (r=0)
+from statsmodels.formula.api import ols			# 단일/다중 선형회귀
+		model = ols('Y ~ X1 * C(X2)', data=df).fit()
+		model = ols('Y ~ X1 + C(X2) + X1:C(X2)', data=df).fit()
+		model.summary()
+			model.params							# 각 회귀계수
+			model.pvalues							# 각 회귀계수의 p-value
+			SE = model.resid**2						# SE 잔차제곰
+			SSE = SE.sum() 							# SSE
+			MSE = SE.mean()							# MSE
+			r2 = model.rsquared						# R2 결정계수
+			pred = model.get_prediction(new_data)			# 신규데이터에 대한 예측값
+			pred_range = model.summary_frame(alpha=0.05)	# 예측값의 신뢰구간, 예측구간
+			bi_range = model.coef_int(alpha=0.05)			# 회귀계수의 신뢰구간
+
+from statsmodels.stats.anova import anova_lm
+		result = anova_lm(model)
+from statsmodels.formula.api import logit		# 로지스틱회귀
+		model = logit('Y ~ X1 + C(X2)', data=df).fit()
+		summary = model.summary()
+			model.params						# 각 화귀계수
+			odds_ratio = np.exp(model.params['X'])	# X변수에 대한 Y의 오즈비
+			llf = model.llf()					# 로그 우도
+			deviance = llf * (-2)				# 잔차이탈도
+
+
+
+
+
+
+
+
+
+
+
+##### ==================  다중 로지스틱회귀 _1
+from statsmodels.formula.api import logit
+X = df[['Gender', 'SibSp', 'Parch', 'Fare']].copy()
+Y = ['Survived']
+model = logit(formula="Survived ~ Gender + SibSp + Parch + Fare", data=df).fit()
+print("===========================\n")
+print(model.summary())
+print("===========================\n")
+print(round(-0.2007, 3))   # -0.201
+
+
+##### ==================  로지스틱회귀 _2
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression(rnadom_state=0)
+lr.fit(X_tr, y_tr)
+pred = lr.predict(X_val)
+print(roc_auc_score(y_val, pred[:,1]))
+
+
+
 
 
 
@@ -331,7 +436,6 @@ pw_stats_2, pw_p_val_2 = stats.shapiro(df2)
 stats, p_value = stats.mannwhitneyu(df1, df2, )
 1-3) 등분산성검정 ㅡ levene검정
 1-3) 정규성O, 등분산x ㅡ Welch t검정
-
 1-4) 모두 정규O, 모두 등분산O ㅡ t검정
 t_stat, t_pvlaue = stats.ttest_ind(df1, df2, alternative = "greater")
 
@@ -368,8 +472,8 @@ print(coef)
 
 
 ##### ==================  다중 선형 회귀 ㅡ p-value 확인하려면 statsmodels를 이용해야 함
-from statsmodels.fomulas.api import ols
-formula = 'temperature ~ solar + wind + o3'
+from statsmodels.formula.api import ols
+formula = 'temperature ~ solar + wind + C(o3)'
 model = ols(formula, data=df).fit()
 summary = model.summary()
 # 특정 독립변수의 회귀계수 추출

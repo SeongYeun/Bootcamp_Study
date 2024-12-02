@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <div>
+        <ul>
+            <li>사과</li>
+            <li>딸기</li>
+            <li id="orange" class="orange">오렌지</li>
+            <li>망고</li>
+            <li>수박</li>
+        </ul>
+        <div>당근</div>
+        <p>토마토</p>
+        <span class="orange">오렌지</span>
+    </div> -->
+
+    <div class="fruits">
+        <span>딸기</span>
+        <span>수박</span>
+        <div>오렌지</div>
+        <p>망고</p>
+        <h3>사과</h3>
+    </div>
+    <input type="text" value="한국" />
+    <input type="text" value="일본" readonly />
+    <input type="text" value="중국" disalbed />
+    <input type="password" />
+    <!-- 자바스크립트 -->
+    <script>
+        const li = document.querySelectorAll("[type='password']");
+        console.log(li);
+    </script>
+</body>
+</html>
+
+## 1. 기본 선택자
+1) 태크 선택자          document.querySelectorAll("li")
+2) Class 선택자         document.querySelectorAll(".orange")
+3) ID 선택자            document.querySelectorAll("#orange")
+
+## 2. 복합 선택자 (태그명 + class명 조합)
+1) 일치 선택자          document.querySelectorAll("li.orange")
+2) 후손 선택자          document.querySelectorAll("li .orange")
+3) 자식 선택자          document.querySelectorAll("li >.orange")
+4) 인접형제 선택자      document.querySelectorAll(".orange + li")
+5) 일반형제 선택자      document.querySelectorAll(".orange ~ li")
+
+## 3. 가상클래스 선택자
+# 3-1. 사용자 행동에 따른 변화
+1) hover                document.querySelectorAll("a:hover")
+2) active               document.querySelectorAll("a:active")
+3) focus                document.querySelectorAll("a:focus")
+# 3-2. 요소 상황 (.class명 태그명:요소)
+1) first-child          document.querySelectorAll(".fruits span:first-child") ㅡ 태그는 해당 class의 첫번째 자식의 태그명을 써야 함
+2) last-child           document.querySelectorAll(".fruits h3:last-child")    ㅡ 태그는 해당 class의 마지막 자식의 태그명을 써야 함
+3) nth-child            document.querySelectorAll(".fruits *:nth-child(3)")   ㅡ 해당 class의 3번째 자식 태그의 값 추출
+.                       document.querySelectorAll(".fruits *:nth-child(2n)")   ㅡ 해당 class의 짝수번째 자식 태그들의 값 추출 (0부터 계산)
+.                       document.querySelectorAll(".fruits *:nth-child(2n+1)") ㅡ 해당 class의 홀수번째 자식 태그들의 값 추출 (0번째 포함)
+4) not                  document.querySelectorAll(".fruits *:not(span)")       ㅡ 해당 class에서 span태그를 제외한 나머지 태그들의 값 추출
+
+## 4. 가상요소 선택자
+1) before               document.querySelectorAll(".fruits::before{content: "앞!";}") 
+2) after                document.querySelectorAll(".fruits::after{content: "뒤!";}")
+
+## 5. 속성 선택자
+1) disabled               document.querySelectorAll("[disabled]") 
+2) readonly               document.querySelectorAll("[readonly]") 
+3) password               document.querySelectorAll("[type='password']") 
+
+
+

@@ -193,7 +193,8 @@ def ElectricityData(ABC):
         self.usage = usage
         self.new_date = new_date
         self.new_usage = new_usage
-        self.usage_data.update([{"date":new_date, "usage":new_usage}])
+        self.usage_data = [{"date":new_date, "usage":new_usage}]
+        if 
         # else:    
         #     self.usage_data = self.usage_data.append([{"date":new_date, "usage":new_usage}])
     

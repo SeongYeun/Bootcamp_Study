@@ -1,2 +1,1 @@
 *.txt
-for_certi_code.py
