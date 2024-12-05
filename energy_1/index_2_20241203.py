@@ -188,24 +188,157 @@ all_nav = soup.select("nav > ul > li > a")
 #     file.write(contents_news.text)
 
 
-# 실습2. 전자 신문 메인 기사 크롤링
-html_url_main= "https://m.etnews.com/20241203000250"
-res_main = requests.get(html_url_main)
-soup_main = BeautifulSoup(res_main.text, "html.parser")
-# print(soup_main)
+# # 실습2. 전자 신문 메인 기사 크롤링
+# html_url_main= "https://m.etnews.com/20241203000250"
+# res_main = requests.get(html_url_main)
+# soup_main = BeautifulSoup(res_main.text, "html.parser")
+# # print(soup_main)
 
-# 1) 제목 가져오기
-title_main = soup_main.select_one("h2#article_title_h2").text
-print("기사 제목 : ",title_main, "\n")
+# # 1) 제목 가져오기
+# title_main = soup_main.select_one("h2#article_title_h2").text
+# print("기사 제목 : ",title_main, "\n")
 
-# 2) 발행일 가져오기
-pressdate = [i.text for i in soup_main.select("div.timewrap > .time > time")][0]
-print(pressdate, "\n")
+# # 2) 발행일 가져오기
+# pressdate = [i.text for i in soup_main.select("div.timewrap > .time > time")][0]
+# print(pressdate, "\n")
 
-# 3) 본문 내용 가져오기
-content_main = soup_main.select_one("div#articleBody > p")
-print("======================  기사 본문  ======================")
-print(content_main.text)
+# # 3) 본문 내용 가져오기
+# content_main = soup_main.select_one("div#articleBody > p")
+# print("======================  기사 본문  ======================")
+# print(content_main.text)
 
+
+
+# 실습2. 전자 신문 메인 기사 크롤링 ㅡ 리더님 코드
+# 1) 매일경제 robots.txt 확인
+# User-agent: *
+# Disallow: /_TP/
+# Disallow: /_CP/
+# Disallow: /_CT/
+# Disallow: /search
+# Disallow: /news/inc/mkNewsLogIframe.php
+# Disallow: /include/inc_news_cnt.php
+
+
+# html_url_main= "https://www.mk.co.kr/news/sports/11183644"
+# res_main = requests.get(html_url_main)
+# soup_main = BeautifulSoup(res_main.text, "html.parser")
+# # print(soup_main)
+
+# title = soup_main.select_one(".news_ttl")  #  > div:first-child > div:first-child > div:first-child > p> span
+# print("제목: ",title.text)
+# time = soup_main.select_one(".time_area > dl > dd")
+# print("날짜: ",time.text)
+# content = soup_main.select("div.news_cnt_detail_wrap *:not(div)")
+# print("기사\n",time.text)
+
+
+# # 명언 크롤링
+# quote_html_url = "https://quotes.toscrape.com/"
+# res_quote = requests.get(quote_html_url)
+# soup_quote = BeautifulSoup(res_quote.text, "html.parser")
+# quote = soup_quote.select(".quote > .text")
+# # print(len(quote))
+# print()
+# text = [ i.text.strip() for i in quote]
+# # print(text)
+# print()
+# speak = soup_quote.select(".author")
+# author = [i.text.strip() for i in speak]
+# # print(author)
+# zipped = list(zip(text, author))            # zip : 두 list의 병렬 합친 튜플 생성
+# # print(zipped)
+# for text, speak in zipped:
+#     print (f"명언 : ", text)
+#     print(f"from : {speak} \n")
+
+
+# # 실습3. 네이버 환율정보 크롤링
+# exchange_html_url = "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
+# res_exchange = requests.get(exchange_html_url)
+# soup_exchange = BeautifulSoup(res_exchange.text, "html.parser")
+# exchange_type = [ i.text for i in soup_exchange.select("ul.MainList_list__TEOEp > li > a > strong")]
+# # print(exchange_type)
+# # print()
+# exchange_rate = [ i.text for i in soup_exchange.select("ul.MainList_list__TEOEp > li > a > span")]
+# exchange_rate = [ exchange_rate[i] for i in range(len(exchange_rate)) if i % 2 == 0]
+# # print(exchange_rate)
+# # print()
+# exchange = list(zip(exchange_type, exchange_rate))
+# print("===========  환율 정보  ===========")
+# for e_type, e_rate in exchange:
+#     print(f"환종 : {e_type} ㅡ 환율 : {e_rate}")
+
+# 실습3. 네이버 환율정보 크롤링 ㅡ 리더님 코드
+# 네이버증권 > 시장지표 > 환율
+from bs4 import BeautifulSoup
+import requests
+# html_url = "https://finance.naver.com/marketindex/"
+# res = requests.get(html_url)
+# soup = BeautifulSoup(res.text, "html.parser")
+# usd = soup.select("#exchangeList .usd .value")
+# jpy = soup.select("#exchangeList .jpy .value")
+# cny = soup.select("#exchangeList .cny .value")
+# print("USD: ", usd.text)
+# print("JPY: ", jpy.text)
+# print("CNY: ", cny.text)
+
+
+
+
+# # 실습4. 주식정보 크롤링
+# stock_html_url = "https://finance.naver.com/item/main.naver?code=005490"
+# res_stock = requests.get(stock_html_url)
+# soup_stock = BeautifulSoup(res_stock.text, "html.parser")
+# # 종목명
+# stock_comp_name = soup_stock.select_one("div.wrap_company > h2 > a")
+# # 종목코드
+# stock_comp_code = soup_stock.select_one("div.description > span.code")
+# # 기준일자
+# stock_comp_date = soup_stock.select_one("span#time > .date")
+# # 기업개요
+# stock_comp_desc = [ i.text for i in soup_stock.select("div.summary_info > p")]
+# stock_comp_desc = ''.join(stock_comp_desc)
+# # 금일 종가
+# price_close = [ i.text for i in soup_stock.select("p.no_today > em.no_down > span") if i.text.isdecimal() ]
+# price_close = int(''.join(price_close))
+# # 기타 정보 (시가/고가/저가/전일종가/거래량/거래대금)
+# info_table = [i.text.strip() for i in soup_stock.select(".no_info span") if len(i.text)!=1]
+# del info_table[4:6]
+# del info_table[10]
+# info_type = [i for i in info_table if info_table.index(i)%2==0]
+# info_nums = [i for i in info_table if info_table.index(i)%2==1]
+# info_tuple = list(zip(info_type, info_nums))
+
+# # 주식 정보 출력
+# print(f"종목명(종목코드) :  {stock_comp_name.text} {stock_comp_code.text}\n")  #.text.strip()
+# print(f"기업개요 : \n   {stock_comp_desc}\n")
+# print(f"주가일자 : {stock_comp_date.text}\n")
+# print(f"금일 종가 : {price_close:,d}원\n")
+# for i in range(len(info_tuple)):
+#     if info_tuple[i][0] =="거래대금":
+#         print(f"{info_tuple[i][0]}(백만) : {info_tuple[i][1]}")
+#     else:
+#         print(f"{info_tuple[i][0]} : {info_tuple[i][1]}")
+
+
+
+# 실습4. 주식정보 크롤링 ㅡ 리더님 코드
+#  게속 업데이트되면서 html 화면의 Elemnet 확인이 어려울때 > Network 탭에서 정지 아이콘을 클릭한 후 
+def stock(code):
+    html_url = f"https://finance.naver.com/item/main.naver?code={code}"
+    res = requests.get(html_url)
+    soup = BeautifulSoup(res.text, "html.parser")
+    # print(soup)
+    comppany = soup.select_one(".wrap_company > h2 > a")
+    print(f"회사명 : {comppany.text}")
+    price = soup.select_one(".today > .no_today .blind")
+    print(f"종가 : {price.text.strip()}원")
+    ex_price = soup.select_one(".today > .no_exday .blind")
+    print(f"전일대비 : {ex_price.text.strip()[0]}원")
+
+stock("035720")     # 카카오
+stock("005930")     # 삼성전자
+stock("294090")     # 카카오
 
 
