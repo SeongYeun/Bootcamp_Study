@@ -68,3 +68,9 @@ print(even_or_odd(7))       # --> 홀수
 even_numbers = list(filter(lambda x : True if x%2==0 else False, [1,2,3,4,5,6]))
 print(even_numbers)
 # [2, 4, 6]
+
+words = ['apple', 'banana', 'cherry']
+print([(lambda x : len(x))(x) for x in words])
+# [5, 6, 6]
+
+
