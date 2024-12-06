@@ -149,23 +149,23 @@ print(result.info())        # ㅡ 구조 및 타입 요약 (결측치 확인 가
 # memory usage: 144.0+ bytes
 # None
 
-print(result.columns,"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result.columns,"\n")        # ㅡ 컬럼 이름 확인
 # Index(['영희', '철수'], dtype='object')
-print(result.values,"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result.values,"\n")        # ㅡ 행 값 확인
 # [[140 200]
 #  [150 210]
 #  [160 220]
 #  [170 230]
 #  [180 240]
 #  [190 250]]
-print(result.index,"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result.index,"\n")        # ㅡ 인덱스 확인
 # Index(['2020', '2021', '2022', '2023', '2024', '2025'], dtype='object')
 
-print(result.dtypes,"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result.dtypes,"\n")        # ㅡ 데이터 타입 확인
 # 영희    int64
 # 철수    int64
 # dtype: object
-print(result['영희'],"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result['영희'],"\n")        # ㅡ 해당 열의 모든 값 출력 (열이름 미출력) ㅡ 시리즈 형태
 # 2020    140
 # 2021    150
 # 2022    160
@@ -173,7 +173,7 @@ print(result['영희'],"\n")        # ㅡ 구조 및 타입 요약 (결측치 �
 # 2024    180
 # 2025    190
 # Name: 영희, dtype: int64
-print(result[['영희']],"\n")        # ㅡ 구조 및 타입 요약 (결측치 확인 가능)
+print(result[['영희']],"\n")        # ㅡ 해당 열의 모든 값 출력 (열이름 출력) ㅡ 데이터프레임 형태
 #        영희
 # 2020  140
 # 2021  150
@@ -263,6 +263,122 @@ print(df.iloc[0, :],"\n")
 # City     서울
 # Name: a, dtype: object
 
+
+data = {
+    'Name' : ["홍길동", "임꺽정", "성춘향"],
+    'Age' : [25, 30, 27],
+    'City' : ["서울", "부산", "인천"]
+}
+df = pd.DataFrame(data, index=['a', 'b', 'c'])
+print(df,'\n')
+#   Name  Age City
+# a  홍길동   25   서울
+# b  임꺽정   30   부산
+# c  성춘향   27   인천
+
+new_data = {'Name' : "이몽룡", 'Age' : 31, 'City' : "포항"}
+
+result = pd.concat([df, pd.DataFrame([new_data])], ignore_index=True)
+print(result,'\n')
+#   Name  Age City
+# 0  홍길동   25   서울
+# 1  임꺽정   30   부산
+# 2  성춘향   27   인천
+# 3  이몽룡   31   포항
+
+
+result['직업'] = ["엔지니어", '개발자','디자이너','기획자']
+print(result, '\n')
+#   Name  Age City    직업
+# 0  홍길동   25   서울  엔지니어
+# 1  임꺽정   30   부산   개발자
+# 2  성춘향   27   인천  디자이너
+# 3  이몽룡   31   포항   기획자
+
+
+result.at[1, 'City'] = "천안"
+print(result, '\n')
+#   Name  Age City    직업
+# 0  홍길동   25   서울  엔지니어
+# 1  임꺽정   30   천안   개발자
+# 2  성춘향   27   인천  디자이너
+# 3  이몽룡   31   포항   기획자
+
+result.loc[result['Name']=='임꺽정', 'Age'] = 32
+print(result, '\n')
+#   Name  Age City    직업
+# 0  홍길동   25   서울  엔지니어
+# 1  임꺽정   32   천안   개발자
+# 2  성춘향   27   인천  디자이너
+# 3  이몽룡   31   포항   기획자
+
+
+result.rename(columns={'Name':'이름', 'Age':'나이'}, inplace=True)
+print(result, '\n')
+#     이름  나이 City    직업
+# 0  홍길동  25   서울  엔지니어
+# 1  임꺽정  32   천안   개발자
+# 2  성춘향  27   인천  디자이너
+# 3  이몽룡  31   포항   기획자
+
+result.sort_values(by="나이", inplace=True)
+print(result, '\n')
+#     이름  나이 City    직업
+# 0  홍길동  25   서울  엔지니어
+# 2  성춘향  27   인천  디자이너
+# 3  이몽룡  31   포print(result['수학'], '\n')항   기획자
+# 1  임꺽정  32   천안   개발자
+
+result.sort_values(by="나이", ascending=False, inplace=True)
+print(result, '\n')
+#     이름  나이 City    직업
+# 1  임꺽정  32   천안   개발자
+# 3  이몽룡  31   포항   기획자
+# 2  성춘향  27   인천  디자이너
+# 0  홍길동  25   서울  엔지니어
+
+result.drop(columns=['City'], inplace=True)
+print(result, '\n')
+#     이름  나이    직업
+# 1  임꺽정  32   개발자
+# 3  이몽룡  31   기획자
+# 2  성춘향  27  디자이너
+# 0  홍길동  25  엔지니어 
+
 """
 
+# 실습2. 데이터프레임 만들기
+name = ['홍길동','임꺽정','성춘향']
+math = [85,90,78]
+eng = [88,76,92]
+sci = [95,89,84]
+df = pd.DataFrame({
+    "이름" : name,
+    "수학" : math,
+    "영어" : eng,
+    "과학" : sci 
+})
+print(df, '\n')
+new_data = pd.DataFrame({
+    "이름" : ["이몽룡"],
+    "수학" : [88],
+    "영어" : [85],
+    "과학" : [90] 
+})
+result = pd.concat([df, new_data], ignore_index=True)
+result.rename(columns={"수학" : "Math"}, inplace=True)
+result.at[1,'영어'] = 80
+result['Total'] = result.iloc[:,1]+result.iloc[:,2]+result.iloc[:,3]
+# ㅡㅡ>  result['Total'] = result['수학'] + result['영어'] + result['과학']
+print(result, '\n')
 
+
+
+print(result['Math'], '\n')
+# 0    85
+# 1    90
+# 2    78
+# 3    88
+# Name: Math, dtype: int64
+print(result.loc['Math'], '\n')   # 오류남 ㅡ 이유 : 인덱스정보없이 열이름만 있어서 오류
+# ㅡㅡ> loc와 iloc는 행에 접근하는 방식이기 때문에 인덱스 정보가 포함되어야 함
