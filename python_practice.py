@@ -498,9 +498,9 @@ print("df.items() : \n", pd.DataFrame(df.items()))
 print()
 print("df.index : ", df.index)
 print()
-"""
-print("df.sort_columns : ", df.sort_columns())
+print("df.sort_columns : ", df.sort_columns()) # 오류
 print()
+"""
 
 # 나이가 25 이상인 행만 필터링하고, 'Score' 열의 값을 1.1배로 변환
 print("방법 1 : \n", df[df['Age'] >= 25].assign(Score=lambda x: x['Score'] * 1.1))
