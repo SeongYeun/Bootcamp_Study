@@ -183,7 +183,7 @@ print(result[['영희']],"\n")        # ㅡ 해당 열의 모든 값 출력 (열
 # 2025  190
 
 
-
+"""
 data = {
     'Name' : ["홍길동", "임꺽정", "성춘향"],
     'Age' : [25, 30, 27],
@@ -217,6 +217,10 @@ print(df.loc[ df['Age']>=30 ])
 #   Name  Age City
 # b  임꺽정   30   부산
 
+print("~ ", df.loc[ ~df['Age']>=30 ])
+
+
+"""
 print(df.loc[:, "Name" ])
 # b  임꺽정   30   부산
 # a    홍길동
