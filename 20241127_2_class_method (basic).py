@@ -227,7 +227,7 @@
 # print(store1.show_info())
 
 
-# 실슴2. Supermarket 클래스 ㅡ 리더님 코드 _ 방법1
+# 실습2. Supermarket 클래스 ㅡ 리더님 코드 _ 방법1
 # class Supermarket:
 #     total_customer = 0
 #     def __init__(self, location, name, product, customer):
