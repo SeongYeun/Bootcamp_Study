@@ -1,7 +1,7 @@
 import cv2
 # 1) 이미지 컬러로 불러오기
-# image_color=cv2.imread("./dog_cat.jpg", cv2.IMREAD_COLOR)
-# image_gray=cv2.imread("./dog_cat.jpg", cv2.IMREAD_GRAYSCALE)
+# image_color=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\raw data\dog_cat.jpg", cv2.IMREAD_COLOR)
+# image_gray=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\raw data\dog_cat.jpg", cv2.IMREAD_GRAYSCALE)
 
 # 이미지 크기 확인
 # print(image_color.shape)
@@ -28,8 +28,8 @@ import cv2
 
 
 
-image_BGR=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\dog_cat.jpg", cv2.IMREAD_COLOR)
-image_color=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\dog_cat.jpg", cv2.IMREAD_COLOR)
+image_BGR=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\raw data\dog_cat.jpg", cv2.IMREAD_COLOR)
+image_color=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\raw data\dog_cat.jpg", cv2.IMREAD_COLOR)
 # print(image_color.shape)        # 원본 : (427, 640, 3)
 
 # 색상공간 변환
@@ -134,7 +134,7 @@ image_color=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\dog_cat.jpg"
 # 실습1. 이미지 처리
 # 1) 이미지 읽어서 크기 출력
 import cv2
-image=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\dog_cat.jpg", 
+image=cv2.imread(r"C:\Users\praye\Documents\Bootcamp\energy_1\raw data\dog_cat.jpg", 
                  cv2.IMREAD_COLOR)
 print(image.shape)
 # cv2.imshow("Image", image)
