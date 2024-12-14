@@ -62,7 +62,8 @@ while cap.isOpened():
     ax3.axis('off')
 
     fig.canvas.draw()           # 창에 위의 plot들을 출력
-    fig.canvas.flush_events()   # 
+    fig.canvas.flush_events()   # matplotlib에서 이벤트 큐를 처리하여 최신 정보를 반영하는 함수
+                                # 출력된 plot에 대한 모든 이벤트를 처리하하여 그래프가 제대로 표시되도록 함
     # plt.pause(0.001)    # 창을 잠시 멈춤  (0.001:1밀리초)
     # plt.clf()           # 창에 있는 것 초기화
 
@@ -81,6 +82,9 @@ plt.close('all')            # 모든 matplotlib 창 닫기
 # 그래서 영상에 대한 처리는 주피터노트북에서 실행하는 것은 비추
 
 """
+
+
+
 """
 # 리더님 코드 ㅡ 1
 
@@ -144,6 +148,8 @@ cv2.destroyAllWindows()
 plt.ioff()      # 인터랙티브 모드 비활성화
 
 """
+
+
 
 # 리더님 코드 ㅡ 2
 
