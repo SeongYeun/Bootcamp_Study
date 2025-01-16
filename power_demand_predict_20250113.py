@@ -368,13 +368,13 @@ import numpy as np
 # Total fit time: 2934.663 seconds
 
 
-print(f'Auto_ARIMA (m=21)\n')  # m=21은 계절성까지 고려하면서 메모리 부족으로 분석 중단됨됨
-auto_model = auto_arima(training, start_p=0, d=1, start_q=0,
-                        max_p=3, max_q=3,
-                        start_P=0, start_Q=0,
-                        max_P=3, max_Q=3, m=21,
-                        seasonal=True, information_criterion='aic',
-                        trace=True)
+# print(f'Auto_ARIMA (m=21)\n')  # m=21은 계절성까지 고려하면서 메모리 부족으로 분석 중단됨됨
+# auto_model = auto_arima(training, start_p=0, d=1, start_q=0,
+#                         max_p=3, max_q=3,
+#                         start_P=0, start_Q=0,
+#                         max_P=3, max_Q=3, m=21,
+#                         seasonal=True, information_criterion='aic',
+#                         trace=True)
 
 # ARIMA(0,1,0)(0,0,0)[21] intercept   : AIC=207876.244, Time=0.22 sec
 # ARIMA(1,1,0)(1,0,0)[21] intercept   : AIC=203506.980, Time=10.80 sec
@@ -394,3 +394,10 @@ auto_model = auto_arima(training, start_p=0, d=1, start_q=0,
 # ARIMA(3,1,0)(2,0,0)[21] intercept   : AIC=203237.821, Time=84.23 sec
 # ARIMA(3,1,0)(3,0,1)[21] intercept   : AIC=203227.404, Time=402.57 sec
 # 메모리 부족으로 이하 분석 중단
+
+
+a=10
+print(f'a<<2 : {a<<2}')         # 40  = 10 * (2**2) = 10 * 4
+print(f'a<<4 : {a<<4}')         # 160 = 10 * (2**4) = 10 * 16
+print(f'a>>2 : {a>>2:.5f}')         # 2 = 10 * (1/2**2) = 10 / 4 = 2
+print(f'a>>4 : {a>>4:.5f}')         # 0 = 10 * (1/2**4) = 10 / 16 = 0
