@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.options import Options       # 웹 프로그램 �
 # driver_E.get("https://www.naver.com/")
 # print(driver_E.title)
 
-# GUI없이 백그라운드에서 웹 화면 열기 ㅡ Oprtions 이용
+# GUI없이 백그라운드에서 웹 화면 열기 ㅡ Options 이용
 options = Options()
 options.add_argument("--start-maximized")
 #options.add_argument("--headless")
